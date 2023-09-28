@@ -1,0 +1,19 @@
+header h1{
+    margin-left: 50px;
+}
+header h4{
+    margin-left: 50px;
+    font-style: italic;
+    color: gray;
+}
+section{
+    background-color: rgb(129, 127, 127);
+    height: 60px;
+}
+main{
+    margin-left: 10px;
+    margin-top: 70px;
+}
+*{
+    font-family: Arial, 'Times New Roman', Times, sans-serif;
+}

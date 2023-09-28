@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Forms</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <header>
+        <h1>Fundamentos da Web</h1>
+        <h4>Exercícios</h4>
+    </header>
+    <section>
+        <a href="index.html">Retornar</a>
+    </section>
+    <main>
+        <h1>Login</h1>
+        <p>Nesta atividade, você deve desenvolver uma tela de contatos de um site. Considere a natureza dos campos.</p>
+        <p>Seus dados devem ser enviados numa requisição HTTP com método POST para a URL http://httpbin.org/post</p>
+        <form action="http://httpbin.org/post" method="post">
+            <fieldset>
+                <legend>Entre em contato conosco!</legend>
+                <div>
+                    <label for="login">Login</label>
+                    <input type="text" placeholder="Digite o login">
+                </div>
+                <div>
+                    <label for="senha">Senha</label>
+                    <input type="text" placeholder="Digite a senha">
+                </div>
+                <button>Login</button>
+            </fieldset>
+        </form>
+    </main>
+</body>
+</html>

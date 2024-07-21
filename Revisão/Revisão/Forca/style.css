@@ -1,0 +1,46 @@
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: greenyellow;
+}
+
+h1, h3 {
+    background-color: blue;
+    color: #faf202;
+    font-weight: lighter;
+    font-size: 50px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#palavra-oculta {
+    font-family: 'Courier New', Courier, monospace;
+    color: #939;
+    font-size: 36px;
+    margin: 20px 0;
+    background-color: yellow;
+}
+
+#letra {
+    padding: 5px;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#tentativas {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: whitesmoke;
+}
+
+#letras-erradas {
+    color: red;
+    font-size:20px;
+    font-weight: bold;
+    background-color: aquamarine;
+}
+
+#imagem{
+    width: 40%;
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Filmes e Séries</title>
+    <script>
+        const xhttp = new XMLHttpRequest();
+        const gera_ul = (dados) => {
+            let lista_lis = ``;
+            let ul = ``;
+            dados.forEach(dado => {
+                lista_lis += `<li>${dado}</li>`;
+            });
+            ul = lista_lis;
+            return ul;
+        }
+        const pega_titulos_semelhantes = (dados, titulos_s) =>{
+            let titles = '';
+            titulos_s.forEach(dado => {
+                if((dado - 1) in dados){
+                    let filme = dados[(dado-1)].titulo;
+                    titles += `
+                        <li>
+                            ${filme}
+                        </li>`;
+                }
+            });
+            return titles;
+        }
+        const gera_filme_card = (img, nome, generos, elenco, idade, descricao, titulos_sem, opinioes, filmes) =>{
+            const generos_ul = gera_ul(generos);
+            const elenco_ul = gera_ul(elenco);
+            let indicativa = "";
+            if(idade >= 0 && idade <= 14) {
+                indicativa = "classe-livre";
+            };
+            if(idade >= 15 && idade <= 17) {
+                indicativa = "classe-adolescente";
+            };
+            if(idade >= 18) {
+                indicativa = "classe-adulto";
+            };
+            const filme_apresentacao = `
+                        <div class="filme_apresentacao">
+                            <img src="${img}" alt="Imagem do filme ${nome} ">
+                            <div class="card_infos">
+                                <h4 class="nome">${nome}</h4>
+                                <p class="faixa-etaria ${indicativa}">Recomendado para ${idade} anos</p>
+                                <div class="generos">
+                                    <ul>
+                                        ${generos_ul}
+                                    </ul>
+                                </div>
+        
+                                <div class="resenha">
+                                    <div class="elenco">
+                                        Elenco:
+                                        <ul>
+                                            ${elenco_ul}
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="descricao">Descrição:</p><br/>${descricao}</p><br/>
+                                    </div>
+                                <div>
+                                <ul class="titulos_semelhantes">Títulos semelhantes:${pega_titulos_semelhantes(filmes, titulos_sem)}</ul>
+                            </div>
+                        </div>`;
+            let opinioesx = ``;
+            let notax = ``;
+            opinioes.forEach(opiniao => {
+                notax = ``;
+                console.log(opiniao.rating)
+                for(let i=0; i < opiniao.rating; i++){
+                    notax += `<img src="estrela.png"></img>`;
+                }
+                let comentariox = `<div class='comentario'>${opiniao.descricao}</div>`;
+                let opiniaox = `
+                        <div class="opiniao">
+                            Nota: 
+                            <div class="nota">
+                                ${notax}
+                            </div><br>
+                            Comentário: ${comentariox}<br>
+                        </div>`;
+                opinioesx += opiniaox;
+            });
+            return `<div class="card">
+                        ${filme_apresentacao}
+                        <div class="opinioes">
+                            ${opinioesx}
+                        </div>
+                    </div>`;
+        }
+        
+        function gerar_catalogo_filmes(){
+            const url_filmes = 'https://rafaelescalfoni.github.io/desenv_web/filmes.json';
+        
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    if(this.status==200){
+                        const filmes = JSON.parse(this.response);
+                        console.log(filmes);
+        
+                        filmes.forEach(filme => {
+                            document.querySelector("#catalogo").innerHTML += gera_filme_card(filme.figura, filme.titulo, filme.generos, filme.elenco, filme.classificacao, filme.resumo, filme.titulosSemelhantes, filme.opinioes, filmes);
+                        });
+                    }
+                    else{
+                        alert("Erro na requisição");
+                    }
+                }
+            }
+            xhttp.open("GET", url_filmes);
+            xhttp.send();
+        }
+        
+        gerar_catalogo_filmes();
+    </script>
+    <style type="text/css">
+        body {
+    background-color: yellow;
+    color: blue;
+}
+
+ul{
+    list-style: none;
+}
+
+.header {
+    text-align: center;
+    background-image: url("/turma-da-monica-losango-768x768.jpg");
+    font-size: 60px;
+}
+
+.header h1 {
+    letter-spacing: 3px;
+}
+
+
+/* Organizando cada card */
+.card {
+    width: 30%;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    border: 10px solid black;
+}
+
+.filme_apresentacao img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+
+.classe-livre {
+    background-color: #99ff33;
+}
+
+.classe-adolescente {
+    background-color: #ffcc00;
+}
+
+.classe-adulto {
+    background-color: red;
+}
+
+.generos ul {
+    width: 30%;
+}
+.generos ul li {
+    padding: 10%;
+    margin: 10%;
+    background-color: white;
+    border-radius: 10000px;
+}
+
+.resenha {
+    display: grid;
+    grid-template-columns: 30% 60%;
+}
+
+.elenco {
+    background-color: yellow;
+    border-radius: 40px;
+}
+
+.elenco ul li{
+    padding: 5px;
+}
+
+.nota {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    justify-content: center;
+}
+
+.descricao {
+    text-align: right;
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Filmes do Professor Escalfoni</h1>
+    </header>
+    <section id="catalogo">
+        <!-- <div class="card">
+                <div class="filme_apresentacao">
+                    <img src="" alt="">
+                    <div class="card_infos">
+                        <h4 class="nome"></h4>
+                        <p class="faixa-etaria"></p>
+                        <div class="generos">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                        <div class="elenco">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                        <p class="descricao"></p>
+                        <p class="titulos_semelhantes"></p>
+                    </div>
+                </div>
+                <div class="opinioes">
+                    
+                <div class="opiniao">
+                    Nota: <div class="nota"></div><br>
+                    Comentário: <div class="comentario"></div><br>
+                </div>
+                </div>
+        </div> -->
+    </section>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            background-color:rgb(32, 32, 32);
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            background-color: rgb(42, 42, 42);
+            display: flex;
+            flex-direction: row;
+        }
+
+        .container > nav h3 {
+            color: #fff;
+            margin: 50px 0 20px 0;
+            text-transform: uppercase;
+            font-size:1.3em;
+            text-align: center;
+        }
+        .container > nav {
+            width: 30%;
+            padding: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding:0;
+            margin-top: 50px;
+        }
+
+        nav li {
+            padding: 30px;
+            text-align:center;
+            border-bottom:1px solid rgb(59, 59, 59);
+        }
+
+        nav  a{
+            padding: 30px;
+            width: 100%;
+            text-decoration: none;
+            text-transform: uppercase;
+            color: rgb(149, 149, 149);
+        }
+
+        nav li:hover {
+            background-color: rgb(41, 128, 185);
+        }
+
+        nav li:hover a {
+            color:#fff;
+        }
+
+        .content {
+            border-top: solid 5px rgb(41, 128, 185);
+            background-color: #fff;
+            float:left;
+            width: 70%;
+            padding: 15px;
+            min-height: 100vh;
+        }
+
+
+        #resultado{
+            margin-top: 20px;
+            border-top: 2px solid rgb(32, 32, 32);
+        }
+
+        footer{
+            clear:both;
+        }
+        #cardapio, #pedidos{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        #cardapio img, #pedidos img{
+            width: 150px;
+        }
+
+        #cardapio figure, #pedidos figure{
+            position: relative;
+        }
+        #cardapio figcaption, #pedidos figcaption{
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+            background-color: rgba(0,0,0,0.5);
+            color: #fff;
+            padding: 10px;
+
+        }
+    </style>
+</head>
+<body>
+	<div class="container">
+        <nav>
+            <h3> Atividades</h3>
+            <ul>
+				<li><a href="index.html">Início</a></li>
+                <li><a href="atividade01.html">01. Livraria</a></li>
+                <li><a href="atividade02.html">02. Cafeteria</a></li>
+                <li><a href="atividade03.html">03. Receitas</a></li>
+                <li><a href="atividade04.html">04. CEP</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <h1>Cafeteria</h1>
+            <p>
+                Nesta atividade, trabalharemos a manipulação do DOM utilizando Javascript/JQuery. 
+            </p>
+            <p>
+                Sua tarefa é desenvolver um cardápio eletrônico. Os itens de menu devem ser carregados dinamicamente a partir de uma lista. A intenção é facilitar a organização e atualização do menu. Por questões de simplificação, o menu deve ser carregado a partir do array dado no script atividade02.js.
+            </p>
+            <p>
+
+            </p>
+            <ul id="cardapio">
+                <!-- 
+                    seu código deve carregar dinamicamente os itens de menu disponíveis no 
+                    array cardápio 
+                -->
+            </ul>
+            <h2>Pedidos</h2>
+            <ul id="pedidos">
+                <!-- 
+                    quando o usuário clicar em um item de menu, ele deve ser incluído na lista de 
+                    pedidos e o valor total deve ser recalculado 
+                -->
+            </ul>
+            <h2 id="valorTotal">Total</h2>
+        </div>
+        <footer></footer>
+    </div>
+    <script type="text/javascript">
+        //função construtora de objetos Produto
+        var Produto = function(id, nome, categoria, img, valorUnitario, quantidade){
+            this.id = id;
+            this.nome = nome;
+            this.categoria = categoria;
+            this.foto = img;
+            this.valorUnitario = valorUnitario;
+            this.quantidade = quantidade;
+        }
+
+        // Função para pesquisar por ID (mantida conforme solicitado)
+        const pesquisaPorId = (vetor, objId) => vetor.find(item => item.id == objId)
+
+        // Carregamento de cardápio de exemplo (mantendo var cardapio)
+        var cardapio = [new Produto(1, "Capuccino", "Bebidas Quentes", "https://rafaelescalfoni.github.io/desenv_web/img/capuccino.png",7,1),
+                        new Produto(2, "Espresso", "Bebidas Quentes", "https://rafaelescalfoni.github.io/desenv_web/img/espresso.png",4,1),
+                        new Produto(3, "Frapuccino", "Bebidas Quentes", "https://rafaelescalfoni.github.io/desenv_web/img/frapuccino.png",8,1),
+                        new Produto(4, "Chococcino", "Bebidas Quentes", "https://rafaelescalfoni.github.io/desenv_web/img/chococcino.png",7,1),
+                        new Produto(5, "Chocolate Quente", "Bebidas Quentes", "https://rafaelescalfoni.github.io/desenv_web/img/chocolate_quente.png",10,1),
+                        new Produto(6, "Frapê", "Bebidas Frias", "https://rafaelescalfoni.github.io/desenv_web/img/frape.png",12,1),
+                        new Produto(7, "Suco de Laranja", "Bebidas Frias", "https://rafaelescalfoni.github.io/desenv_web/img/suco_laranja.png",10,1),
+                        new Produto(8, "Açaí", "Doces", "https://rafaelescalfoni.github.io/desenv_web/img/acai.png",12,1),
+                        new Produto(9, "Bolo de Laranja", "Doces", "https://rafaelescalfoni.github.io/desenv_web/img/bolo_laranja.png",8,1)];
+                
+        // Função para criar o HTML de um produto
+        const gerarHTMLProduto = (item) => {
+            return `<li id="${item.id}"><figure>
+                        <img src="${item.foto}" alt="${item.nome}">
+                        <figcaption>
+                            ${item.nome}<strong>${item.valorUnitario * item.quantidade}</strong>
+                        </figcaption>
+                    </figure></li>`;
+        }
+
+        // Função para exibir a lista de produtos (cardápio)
+        const exibirCardapio = (listaItens, seletor) => {
+            const listaElementos = document.querySelector(seletor);
+            listaElementos.innerHTML = ""; // Certifique-se de que o conteúdo anterior seja limpo antes de exibir.
+            listaItens.forEach(produto => {
+                listaElementos.innerHTML += gerarHTMLProduto(produto);
+            });
+        }
+
+        // Função para exibir os pedidos
+        const exibirPedidos = (itensPedidos, seletor) => {
+            const listaElementos = document.querySelector(seletor);
+            listaElementos.innerHTML = ""; // Limpa a lista antes de exibir novos pedidos.
+            itensPedidos.forEach(item => {
+                listaElementos.innerHTML += gerarHTMLProduto(item);
+            });
+        }
+
+        // Função para limpar lista de elementos no seletor
+        function limparLista(seletor) {
+            const lista = document.querySelector(seletor);
+            lista.innerHTML = "";    
+        }
+
+        // Função para calcular o valor total dos pedidos
+        function calcularTotal(listaItens) {
+            return listaItens.reduce((total, item) => total + (item.quantidade * item.valorUnitario), 0);
+        }
+
+        // Função para atualizar o valor total na tela
+        function atualizarValorTotal(pedidos) {
+            const displayTotal = document.querySelector("#valorTotal");
+            const total = calcularTotal(pedidos);
+            displayTotal.innerHTML = `Total - R$${total},00`;
+        }
+
+        // Exibe o cardápio no seletor "#cardapio"
+        exibirCardapio(cardapio, "#cardapio");
+
+        let carrinhoCompras = [];
+
+        // Função para carregar pedidos do localStorage
+        const carregarPedidosLocalStorage = () => {
+            cardapio.forEach(function(produto) {
+                let itemSalvo = JSON.parse(localStorage.getItem(produto.id));
+                if (itemSalvo) {
+                    produto.quantidade = itemSalvo.quantidade;
+                    carrinhoCompras.push(produto);
+                }
+            });
+        }
+
+        // Função para salvar um pedido no localStorage
+        const salvarNoLocalStorage = (produto) => {
+            const pedidoInfo = {nome: produto.nome, quantidade: produto.quantidade};
+            localStorage.setItem(produto.id, JSON.stringify(pedidoInfo));
+        }
+
+        // Carrega os pedidos salvos no localStorage
+        carregarPedidosLocalStorage();
+        exibirPedidos(carrinhoCompras, "#pedidos");
+        atualizarValorTotal(carrinhoCompras);
+
+        // Função para adicionar item ao carrinho de compras
+        const adicionarAoCarrinho = (produto) => {
+            let produtoExistente = carrinhoCompras.some(item => item.id === produto.id);
+            if (!produtoExistente) {
+                carrinhoCompras.push(produto);
+            } else {
+                produto.quantidade++;
+            }
+            salvarNoLocalStorage(produto);
+            limparLista("#pedidos");
+            exibirPedidos(carrinhoCompras, "#pedidos");
+            atualizarValorTotal(carrinhoCompras);
+        }
+
+        // Evento de clique para adicionar produtos ao carrinho
+        document.querySelector("#cardapio").addEventListener("click", function(evento) {
+            const elementoClicado = evento.target.closest("li"); // Corrige para garantir que o li seja capturado corretamente.
+            if (elementoClicado) {
+                const produto = pesquisaPorId(cardapio, elementoClicado.id);
+                if (produto) {
+                    adicionarAoCarrinho(produto);
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

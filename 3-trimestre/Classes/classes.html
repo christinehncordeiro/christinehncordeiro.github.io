@@ -348,7 +348,7 @@
           console.log(lista.listarTarefasConcluidas());
 
           // 10. Classe para Controle de Estacionamento
-          class Carro {
+          class CarroEstacionar {
               constructor(placa, modelo) {
                   this.placa = placa;
                   this.modelo = modelo;
@@ -383,8 +383,8 @@
           }
 
           const estacionamento = new Estacionamento(2);
-          estacionamento.adicionarCarro(new Carro("ABC-1234", "Gol"));
-          estacionamento.adicionarCarro(new Carro("XYZ-5678", "Fiesta"));
+          estacionamento.adicionarCarro(new CarroEstacionar("ABC-1234", "Gol"));
+          estacionamento.adicionarCarro(new CarroEstacionar("XYZ-5678", "Fiesta"));
           estacionamento.removerCarro("ABC-1234");
           console.log(estacionamento.listarCarros());
   </script>

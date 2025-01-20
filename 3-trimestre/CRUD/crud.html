@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Biblioteca</title>
+    <script src="./script.js" defer></script>
+</head>
+<body>
+    <h1>Gerenciamento de Biblioteca</h1>
+
+    <div>
+        <h2>Cadastro de Livro</h2>
+        <input type="text" placeholder="Título" id="titulo">
+        <input type="text" placeholder="Autor" id="autor">
+        <input type="text" placeholder="Ano de Publicação" id="ano">
+        <button id="add">Adicionar Livro</button>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Atualizar Livro</h2>
+        <input type="number" placeholder="ID" id="ID">
+        <input type="text" placeholder="Novo Título" id="titulo2">
+        <input type="text" placeholder="Novo Autor" id="autor2">
+        <input type="text" placeholder="Novo Ano" id="ano2">
+        <button id="att">Atualizar Livro</button>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Remover Livro</h2>
+        <input type="number" placeholder="ID" id="id3">
+        <button id="del">Remover Livro</button>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Livros Cadastrados</h2>
+        <div id="livrosList"></div>
+    </div>
+</body>
+</html>

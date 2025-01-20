@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API de Conversão de Moeda</title>
+</head>
+<body>
+
+    <h1>Converter moeda</h1>
+    <input type="number" name="numero" id="numero" placeholder="Valor">
+    <select type="text" id="opcaoMoeda"></select>
+    <div id="reposta"></div>
+    <button id="botao">Converter</button>
+
+  <script>
+    const url = `https://v6.exchangerate-api.com/v6/af8d670acc715021dc0ea030/latest/USD`;
+
+    async function opcoesMoeda () {
+      let resp = await fetch(url);
+      money = await resp.json();
+
+      for (const valor in money.conversion_rates) {
+        document.querySelector("#opcaoMoeda").innerHTML += "<option value=" + valor + " id=" + valor + ">" + valor + "</option>"
+      }
+    }
+
+    opcoesMoeda ();
+
+    document.querySelector("#botao").addEventListener("click", async () => {
+      let resp = await fetch(url);
+      money = await resp.json();
+
+      const numero = document.querySelector("#numero").value;
+      const moeda = document.querySelector("#opcaoMoeda").value;
+      let taxa = money.conversion_rates[moeda];
+
+      document.querySelector("#reposta").innerHTML = taxa * numero;
+    })
+  </script>
+</body>
+</html>

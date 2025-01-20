@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    // 1. Classe Pessoa e Herança
+          class Pessoa {
+              constructor(nome, idade, sexo) {
+                  this.nome = nome;
+                  this.idade = idade;
+                  this.sexo = sexo;
+              }
+
+              apresentar() {
+                  return `Olá, meu nome é ${this.nome}, tenho ${this.idade} anos e sou ${this.sexo}.`;
+              }
+          }
+
+          class Aluno extends Pessoa {
+              constructor(nome, idade, sexo, matricula, curso) {
+                  super(nome, idade, sexo);
+                  this.matricula = matricula;
+                  this.curso = curso;
+              }
+
+              apresentar() {
+                  return `${super.apresentar()} Estou matriculado no curso de ${this.curso}.`;
+              }
+          }
+
+          const aluno = new Aluno("Chris", 20, "mulher", 12345, "informática");
+          console.log(aluno.apresentar());
+
+          // 2. Classe ContaBancaria
+          class ContaBancaria {
+              constructor(titular, saldo) {
+                  this.titular = titular;
+                  this.saldo = saldo;
+              }
+
+              depositar(valor) {
+                  this.saldo += valor;
+              }
+
+              sacar(valor) {
+                  if (valor <= this.saldo) {
+                      this.saldo -= valor;
+                  } else {
+                      console.log("Saldo insuficiente.");
+                  }
+              }
+
+              mostrarSaldo() {
+                  console.log(`Saldo atual: R$ ${this.saldo}`);
+              }
+          }
+
+          class ContaCorrente extends ContaBancaria {
+              constructor(titular, saldo, limite) {
+                  super(titular, saldo);
+                  this.limite = limite;
+              }
+
+              sacar(valor) {
+                  if (valor <= this.saldo + this.limite) {
+                      this.saldo -= valor;
+                  } else {
+                      console.log("Saldo e limite insuficientes.");
+                  }
+              }
+          }
+
+          const conta = new ContaCorrente("Maria", 1000, 500);
+          conta.sacar(1200);
+          conta.mostrarSaldo();
+
+          // 3. Sistema de Gerenciamento de Produtos
+          class Produto {
+              constructor(nome, preco, quantidadeEmEstoque) {
+                  this.nome = nome;
+                  this.preco = preco;
+                  this.quantidadeEmEstoque = quantidadeEmEstoque;
+              }
+
+              atualizarEstoque(quantidade) {
+                  this.quantidadeEmEstoque += quantidade;
+              }
+
+              calcularValorEstoque() {
+                  return this.preco * this.quantidadeEmEstoque;
+              }
+          }
+
+          class ProdutoPerecivel extends Produto {
+              constructor(nome, preco, quantidadeEmEstoque, dataDeValidade) {
+                  super(nome, preco, quantidadeEmEstoque);
+                  this.dataDeValidade = dataDeValidade;
+              }
+
+              verificarValidade(dataAtual) {
+                  return new Date(dataAtual) <= new Date(this.dataDeValidade);
+              }
+          }
+
+          const produto = new ProdutoPerecivel("Leite", 5, 100, "2025-01-30");
+          console.log(produto.verificarValidade("2025-01-15"));
+
+          // 4. Classe Veiculo
+          class Veiculo {
+              constructor(marca, modelo, ano) {
+                  this.marca = marca;
+                  this.modelo = modelo;
+                  this.ano = ano;
+              }
+
+              descrever() {
+                  return `Marca: ${this.marca}, Modelo: ${this.modelo}, Ano: ${this.ano}`;
+              }
+          }
+
+          class Carro extends Veiculo {
+              constructor(marca, modelo, ano, portas) {
+                  super(marca, modelo, ano);
+                  this.portas = portas;
+              }
+
+              descrever() {
+                  return `${super.descrever()}, Portas: ${this.portas}`;
+              }
+          }
+
+          class Moto extends Veiculo {
+              constructor(marca, modelo, ano, cilindradas) {
+                  super(marca, modelo, ano);
+                  this.cilindradas = cilindradas;
+              }
+
+              descrever() {
+                  return `${super.descrever()}, Cilindradas: ${this.cilindradas}`;
+              }
+          }
+
+          const carro = new Carro("Toyota", "Corolla", 2020, 4);
+          console.log(carro.descrever());
+
+          const moto = new Moto("Honda", "CG 150", 2019, 150);
+          console.log(moto.descrever());
+
+          // 5. Classe de Gerenciamento de Funcionários
+          class Funcionario {
+              constructor(nome, salario) {
+                  this.nome = nome;
+                  this.salario = salario;
+              }
+
+              aumentarSalario(percentual) {
+                  this.salario += this.salario * (percentual / 100);
+              }
+
+              mostrarInformacoes() {
+                  return `Funcionário: ${this.nome}, Salário: R$ ${this.salario.toFixed(2)}`;
+              }
+          }
+
+          class Gerente extends Funcionario {
+              constructor(nome, salario, departamento) {
+                  super(nome, salario);
+                  this.departamento = departamento;
+              }
+
+              mostrarInformacoes() {
+                  return `${super.mostrarInformacoes()}, Departamento: ${this.departamento}`;
+              }
+          }
+
+          class Estagiario extends Funcionario {
+              aumentarSalario(percentual) {
+                  if (percentual > 10) {
+                      percentual = 10;
+                  }
+                  super.aumentarSalario(percentual);
+              }
+          }
+
+          const gerente = new Gerente("Carlos", 5000, "TI");
+          console.log(gerente.mostrarInformacoes());
+
+          gerente.aumentarSalario(15);
+          console.log(gerente.mostrarInformacoes());
+
+          // 6. Sistema de Biblioteca
+          class Livro {
+              constructor(titulo, autor, disponivel = true) {
+                  this.titulo = titulo;
+                  this.autor = autor;
+                  this.disponivel = disponivel;
+              }
+
+              emprestar() {
+                  if (this.disponivel) {
+                      this.disponivel = false;
+                  } else {
+                      console.log("Livro já emprestado.");
+                  }
+              }
+
+              devolver() {
+                  this.disponivel = true;
+              }
+
+              status() {
+                  return `Livro: ${this.titulo}, Disponível: ${this.disponivel ? "Sim" : "Não"}`;
+              }
+          }
+
+          class Biblioteca {
+              constructor() {
+                  this.livros = [];
+              }
+
+              adicionarLivro(livro) {
+                  this.livros.push(livro);
+              }
+
+              listarLivrosDisponiveis() {
+                  return this.livros.filter(livro => livro.disponivel).map(livro => livro.status());
+              }
+
+              buscarLivroPorTitulo(titulo) {
+                  return this.livros.find(livro => livro.titulo === titulo);
+              }
+          }
+
+          const biblioteca = new Biblioteca();
+          biblioteca.adicionarLivro(new Livro("1984", "George Orwell"));
+          biblioteca.adicionarLivro(new Livro("A Revolução dos Bichos", "George Orwell", false));
+          console.log(biblioteca.listarLivrosDisponiveis());
+
+          // 7. Classe Jogador para Jogos Online
+          class Jogador {
+              constructor(nome, nivel, experiencia) {
+                  this.nome = nome;
+                  this.nivel = nivel;
+                  this.experiencia = experiencia;
+              }
+
+              ganharExperiencia(pontos) {
+                  this.experiencia += pontos;
+                  if (this.experiencia >= 100) {
+                      this.subirDeNivel();
+                      this.experiencia -= 100;
+                  }
+              }
+
+              subirDeNivel() {
+                  this.nivel += 1;
+              }
+          }
+
+          class Guerreiro extends Jogador {
+              constructor(nome, nivel, experiencia, forca) {
+                  super(nome, nivel, experiencia);
+                  this.forca = forca;
+              }
+
+              subirDeNivel() {
+                  super.subirDeNivel();
+                  this.forca += 10;
+              }
+          }
+
+          const guerreiro = new Guerreiro("Aragorn", 1, 90, 50);
+          guerreiro.ganharExperiencia(20);
+          console.log(guerreiro);
+
+          // 8. Classe Turma e Alunos
+          class Turma {
+              constructor(curso) {
+                  this.curso = curso;
+                  this.alunos = [];
+              }
+
+              adicionarAluno(nome) {
+                  this.alunos.push(nome);
+              }
+
+              removerAluno(nome) {
+                  this.alunos = this.alunos.filter(aluno => aluno !== nome);
+              }
+
+              listarAlunos() {
+                  return `Turma de ${this.curso}: ${this.alunos.join(", ")}`;
+              }
+          }
+
+          class TurmaOnline extends Turma {
+              constructor(curso, linkDeAcesso) {
+                  super(curso);
+                  this.linkDeAcesso = linkDeAcesso;
+              }
+
+              listarAlunos() {
+                  return `${super.listarAlunos()}. Link de acesso: ${this.linkDeAcesso}`;
+              }
+          }
+
+          const turma = new TurmaOnline("Matemática", "http://turmaonline.com/matematica");
+          turma.adicionarAluno("Alice");
+          turma.adicionarAluno("Bruno");
+          turma.removerAluno("Alice");
+          console.log(turma.listarAlunos());
+
+          // 9. Classe para Gerenciar Tarefas
+          class Tarefa {
+              constructor(descricao) {
+                  this.descricao = descricao;
+                  this.concluida = false;
+              }
+
+              marcarConcluida() {
+                  this.concluida = true;
+              }
+
+              descrever() {
+                  return `${this.descricao} - ${this.concluida ? "Concluída" : "Pendente"}`;
+              }
+          }
+
+          class ListaDeTarefas {
+              constructor() {
+                  this.tarefas = [];
+              }
+
+              adicionarTarefa(tarefa) {
+                  this.tarefas.push(tarefa);
+              }
+
+              listarTarefasConcluidas() {
+                  return this.tarefas.filter(tarefa => tarefa.concluida).map(tarefa => tarefa.descrever());
+              }
+          }
+
+          const lista = new ListaDeTarefas();
+          lista.adicionarTarefa(new Tarefa("Estudar JavaScript"));
+          lista.adicionarTarefa(new Tarefa("Fazer exercícios"));
+          lista.tarefas[0].marcarConcluida();
+          console.log(lista.listarTarefasConcluidas());
+
+          // 10. Classe para Controle de Estacionamento
+          class Carro {
+              constructor(placa, modelo) {
+                  this.placa = placa;
+                  this.modelo = modelo;
+              }
+
+              descrever() {
+                  return `Placa: ${this.placa}, Modelo: ${this.modelo}`;
+              }
+          }
+
+          class Estacionamento {
+              constructor(vagasTotais) {
+                  this.vagasTotais = vagasTotais;
+                  this.carros = [];
+              }
+
+              adicionarCarro(carro) {
+                  if (this.carros.length < this.vagasTotais) {
+                      this.carros.push(carro);
+                  } else {
+                      console.log("Estacionamento lotado.");
+                  }
+              }
+
+              removerCarro(placa) {
+                  this.carros = this.carros.filter(carro => carro.placa !== placa);
+              }
+
+              listarCarros() {
+                  return this.carros.map(carro => carro.descrever());
+              }
+          }
+
+          const estacionamento = new Estacionamento(2);
+          estacionamento.adicionarCarro(new Carro("ABC-1234", "Gol"));
+          estacionamento.adicionarCarro(new Carro("XYZ-5678", "Fiesta"));
+          estacionamento.removerCarro("ABC-1234");
+          console.log(estacionamento.listarCarros());
+  </script>
+  <title>Lista de classes</title>
+</head>
+<body>
+  <h1>Oie, Escalfoni. Veja o JavaScript desse código</h1>
+</body>
+</html>
